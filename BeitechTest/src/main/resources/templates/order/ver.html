@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+
+				<h4 class="card-title">
+					<a th:href="@{'/ver/' + ${order.customer.id}}"
+						class="btn btn-light btn-xs">&laquo; volver</a>
+				</h4>
+
+				<ul class="list-group my-2">
+					<li class="list-group-item list-group-item-primary"
+						th:text="'Datos del cliente'"></li>
+					<li class="list-group-item" th:text="${order.customer}"></li>
+					<li class="list-group-item" th:text="${order.customer.email}"></li>
+				</ul>
+				
+				<ul class="list-group my-2">
+					<li class="list-group-item list-group-item-success"
+						th:text="'Datos de la factura'"></li>
+					<li class="list-group-item" th:text="'Orden: ' + ${order.id}"></li>
+					<li class="list-group-item"
+						th:text="'Dirección: ' + ${order.deliveryAddress}"></li>
+					<li class="list-group-item"
+						th:text="'Fecha: ' + ${order.createAt}"></li>
+				</ul>
+				
+				<table th:if="${not #lists.isEmpty(order.orderDetails)}"
+					class="table table-striped table-hover table-bordered my-3">
+					<thead>
+						<tr>
+							<th>Producto</th>
+							<th>Precio</th>
+							<th>Cantidad</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="linea: ${order.orderDetails}">
+							<td th:text="${linea.product.name}"></td>
+							<td th:text="${linea.product.price}"></td>
+							<td th:text="${linea.price}"></td>
+							<td th:text="${linea.calculateTotal()}"></td>
+						</tr>
+					</tbody>
+
+				</table>
+				
+
+				
+
+			</div>
+		</div>
+
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
